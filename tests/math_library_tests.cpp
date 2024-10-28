@@ -6,7 +6,6 @@
 class MathLibTestFixture : public ::testing::Test
 {
 protected:
-
     void SetUp() override
     {
 		// Do some job before test run
@@ -73,7 +72,12 @@ TEST_F(MathLibTestFixture, IsPrimeTest)
     EXPECT_TRUE(MathLib::isPrime(5));
 }
 
+// Новий тест для функції GCD
 TEST_F(MathLibTestFixture, GreatestCommonDivider)
 {
     EXPECT_EQ(MathLib::GCD(10, 6), 2);
+    EXPECT_EQ(MathLib::GCD(18, 12), 6);
+    EXPECT_EQ(MathLib::GCD(7, 3), 1);
+    EXPECT_EQ(MathLib::GCD(100, 10), 10);
+    EXPECT_EQ(MathLib::GCD(81, 27), 27);
 }
