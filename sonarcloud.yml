@@ -1,0 +1,43 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - main # Змініть на вашу основну гілку, якщо потрібно
+  pull_request:
+    branches:
+      - main # Змініть на вашу основну гілку, якщо потрібно
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache SonarCloud
+        uses: actions/cache@v2
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-${{ hashFiles('**/*.java', '**/*.cs', '**/*.py', '**/*.js', '**/*.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=Vlad321-0_simple_math_lib
+            -Dsonar.organization=<your_organization_key> # Вставте вашу організацію або залиште порожнім, якщо немає
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Quality Gate Check
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=Vlad321-0_simple_math_lib
+            -Dsonar.organization=<your_organization_key> # Вставте вашу організацію або залиште порожнім, якщо немає
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
